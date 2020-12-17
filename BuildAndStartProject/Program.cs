@@ -6,14 +6,17 @@ namespace BuildAndStartProject
 {
     class Program
     {
+        public static string containerName=string.Empty;
+        public static string name=string.Empty;
+        public static string roles=string.Empty;
         static void Main(string[] args)
         {
-            var path = @"C:\Suite\bpm-webapi\Bimser.BPM.WebApi";
+            var path = args[0];
             var projectPath =new DirectoryInfo(path);
-
-            var outputPath = "C:\\Temp\\ProjectOutputs";
-
-            
+            var outputPath =args[1];
+            containerName = args[2];
+            name=args[3];
+            roles = args[4];
             var key = Console.ReadKey();
             if(key.Key==ConsoleKey.S)
             {
@@ -43,7 +46,7 @@ namespace BuildAndStartProject
 
             process.Close();
 
-            startInfo.Arguments = "run -p 12006:12006 -p 6008:6008 --name bpmwebapi -e Name=BPMWebAPILocal -e HostName=bpmwebapi -e Port=0 -e ActorSystem=bpmlocal -e Roles=BPMWebAPILocal -e WebPort=12006 -e StudioRouterName=StudioRouterLocal -e Debug=false -e BPMRouterName=BPMRouterLocal -e AuthenticationRouterName=AuthenticationRouterLocal -e ConfigurationRouterName=ConfigurationRouterLocal -e HumanResourcesRouterName=HumanResourcesRouterLocal -e BSCRouterName=BSCRouterLocal -e SysConf=eyAiRGF0YWJhc2UiOiAiU2VydmVyPXNxbHNydjtJbml0aWFsIENhdGFsb2c9RU5TRU1CTEVfU1VJVEVfREVWO1BlcnNpc3QgU2VjdXJpdHkgSW5mbz1GYWxzZTtVc2VyIElEPXNhO1Bhc3N3b3JkPUJjMzQxNDMxNDtNdWx0aXBsZUFjdGl2ZVJlc3VsdFNldHM9RmFsc2U7Q29ubmVjdGlvbiBUaW1lb3V0PTMwOyIsICJQcm92aWRlciI6ICJTcWxTZXJ2ZXIiIH0= -e CLUSTER_IP=bpmwebapi -e CLUSTER_SEEDS=akka.tcp://bpmlocal@lighthouse:4053 -e CLUSTER_PORT=6008 -d bimserbpmwebapi";
+            startInfo.Arguments = $"run -p 12006:12006 -p 6008:6008 --name {containerName} -e Name={name} -e HostName={containerName} -e Port=0 -e ActorSystem=bpmlocal -e Roles={roles} -e WebPort=12006 -e StudioRouterName=StudioRouterLocal -e Debug=false -e BPMRouterName=BPMRouterLocal -e AuthenticationRouterName=AuthenticationRouterLocal -e ConfigurationRouterName=ConfigurationRouterLocal -e HumanResourcesRouterName=HumanResourcesRouterLocal -e BSCRouterName=BSCRouterLocal -e SysConf=eyAiRGF0YWJhc2UiOiAiU2VydmVyPXNxbHNydjtJbml0aWFsIENhdGFsb2c9RU5TRU1CTEVfU1VJVEVfREVWO1BlcnNpc3QgU2VjdXJpdHkgSW5mbz1GYWxzZTtVc2VyIElEPXNhO1Bhc3N3b3JkPUJjMzQxNDMxNDtNdWx0aXBsZUFjdGl2ZVJlc3VsdFNldHM9RmFsc2U7Q29ubmVjdGlvbiBUaW1lb3V0PTMwOyIsICJQcm92aWRlciI6ICJTcWxTZXJ2ZXIiIH0= -e CLUSTER_IP=bpmwebapi -e CLUSTER_SEEDS=akka.tcp://bpmlocal@lighthouse:4053 -e CLUSTER_PORT=6008 -d bimserbpmwebapi";
             process.StartInfo = startInfo;
             process.Start();
 
